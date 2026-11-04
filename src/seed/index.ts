@@ -1,6 +1,7 @@
 /**
  * Seeds the database with the content of the CV.
- * Run with:  pnpm seed          (adds content only if the database is empty)
+ * Runs automatically during `pnpm build`, but only fills a brand-new database.
+ * Run manually with:  pnpm seed   (adds content only if the database is empty)
  *            SEED_FRESH=1 pnpm seed  (wipes CV content collections first)
  * Optionally set SEED_ADMIN_EMAIL and SEED_ADMIN_PASSWORD to create the first admin user.
  */
@@ -32,8 +33,9 @@ async function run() {
   const slugs: CollectionSlug[] = ['publications', 'experiences', 'education', 'grants', 'projects', 'courses', 'activities', 'supervisions']
 
   if (!fresh) {
-    const { totalDocs } = await payload.count({ collection: 'publications' })
-    if (totalDocs > 0) {
+    // Only seed a brand-new database (the profile name is set by the first seed).
+    const current = await payload.findGlobal({ slug: 'profile' })
+    if (current?.name) {
       payload.logger.info('Database already has content. Set SEED_FRESH=1 to re-seed.')
       process.exit(0)
     }

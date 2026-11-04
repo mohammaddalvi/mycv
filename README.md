@@ -30,7 +30,7 @@ In the blog editor, use the **+** button for images, video files, YouTube/Vimeo 
 3. In the project's **Storage** tab add a **Neon Postgres** database and a **Blob** store. Vercel sets `DATABASE_URL` (Neon may call it `POSTGRES_URL`; copy it into `DATABASE_URL`) and `BLOB_READ_WRITE_TOKEN`.
 4. Add environment variables `PAYLOAD_SECRET` (a long random string) and `NEXT_PUBLIC_SITE_URL` (e.g. `https://dalvi.academy`).
 5. Deploy. The build runs database migrations automatically.
-6. Load the CV content once from your computer: `DATABASE_URL=... PAYLOAD_SECRET=... SEED_ADMIN_EMAIL=you@example.com SEED_ADMIN_PASSWORD=... pnpm seed`. Or skip the seed and open `/admin` to create the first admin account.
+6. The first build fills the empty database with the CV content automatically. Open `https://<your-site>/admin` and create your admin account (the first account becomes the admin).
 7. Add your custom domain under **Settings → Domains**, then update `NEXT_PUBLIC_SITE_URL` and redeploy.
 8. Submit `https://your-domain/sitemap.xml` in Google Search Console.
 
